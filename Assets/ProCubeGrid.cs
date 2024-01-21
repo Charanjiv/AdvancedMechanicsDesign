@@ -18,7 +18,7 @@ public class ProcPlane : MonoBehaviour
 
 {
 
-    private MeshFilter m_Filter;
+    /*private MeshFilter m_Filter;
 
     private Mesh m_Mesh;
 
@@ -189,10 +189,10 @@ public class ProcPlane : MonoBehaviour
         vertexArray.Add(RefPos + new Vector3(-0.5f, 0.5f, 0.5f));
         triArray.AddRange(new int[] { RefTri + 20, RefTri + 23, RefTri + 21, RefTri + 21, RefTri + 23, RefTri + 22 });
 
-    }
+    }*/
 
 }
-#if UNITY_EDITOR
+/*#if UNITY_EDITOR
 
 [CustomEditor(typeof(ProcPlane))]
 public class ProcPlaneEditor : Editor
@@ -215,4 +215,4 @@ public class ProcPlaneEditor : Editor
     }
 }
 
-#endif
+#endif*/
