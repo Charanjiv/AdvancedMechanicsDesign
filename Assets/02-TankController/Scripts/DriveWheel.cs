@@ -16,7 +16,9 @@ public class DriveWheel : MonoBehaviour
 	private float m_Acceleration;
 	public void SetAcceleration(float amount)
 	{
-		
+		m_Acceleration = amount;
+		Vector3 moveDirection = transform.forward * amount;
+		m_RB.MovePosition(m_RB.position + moveDirection);
 	}
 
 	public void Init(TankSO inData)
