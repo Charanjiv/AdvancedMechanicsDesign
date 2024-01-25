@@ -21,11 +21,12 @@ public class Turret : MonoBehaviour
 	public void Init(TankSO inData)
 	{
 		m_Data = inData;
+		
 	}
 
 	public void SetRotationDirty()
 	{
-		
+		StartCoroutine(C_AimTurret());
 	}
 
 	private IEnumerator C_AimTurret()

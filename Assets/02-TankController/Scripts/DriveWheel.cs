@@ -23,6 +23,7 @@ public class DriveWheel : MonoBehaviour
 
 	public void Init(TankSO inData)
 	{
+		m_Data = inData;
 		
 	}
 
