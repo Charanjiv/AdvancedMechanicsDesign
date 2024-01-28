@@ -31,6 +31,7 @@ public class TankController : MonoBehaviour
 		m_RB = GetComponent<Rigidbody>();
 		m_CameraController = GetComponent<CameraController>();
 		m_TurretController = GetComponent<Turret>();
+		
 		m_NumSuspensionsGrounded = 0;
 		foreach (DriveWheel wheel in m_DriveWheels)
 		{
@@ -81,7 +82,9 @@ public class TankController : MonoBehaviour
 		m_InAccelerate = context.ReadValue<float>();
 		foreach (DriveWheel wheel in m_DriveWheels)
 		{
-			wheel.SetAcceleration(m_InAccelerate);
+            
+
+            wheel.SetAcceleration(m_InAccelerate);
 		}
 		m_TurretController.SetRotationDirty();
 	}

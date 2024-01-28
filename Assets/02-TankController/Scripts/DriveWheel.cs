@@ -13,12 +13,21 @@ public class DriveWheel : MonoBehaviour
 	private int m_NumGroundedWheels;
 	private bool m_Grounded;
 
-	private float m_Acceleration;
+	public float m_Acceleration;
 	public void SetAcceleration(float amount)
 	{
-		m_Acceleration = amount;
-		Vector3 moveDirection = transform.forward * amount;
-		m_RB.MovePosition(m_RB.position + moveDirection);
+		m_Acceleration = 1;
+
+        if (m_Acceleration == 1f)
+		{
+			Vector3 moveDirection = transform.forward * amount;
+			//m_RB.MovePosition(m_RB.position + moveDirection);
+			m_RB.AddForce(moveDirection, ForceMode.Impulse);
+		}
+		else
+		{
+			return;
+		}
 	}
 
 	public void Init(TankSO inData)
