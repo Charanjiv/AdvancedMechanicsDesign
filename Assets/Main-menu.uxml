@@ -1,0 +1,12 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/main-menu.uss?fileID=7433441132597879392&amp;guid=116cdd498d78577408fdb8332b2d3932&amp;type=3#main-menu" />
+    <ui:VisualElement name="page" style="flex-grow: 1; align-items: center; justify-content: center; background-color: rgb(0, 0, 0);">
+        <ui:VisualElement name="menu" style="flex-grow: 0; justify-content: space-between; align-items: stretch; background-color: rgb(63, 62, 62); -unity-background-image-tint-color: rgb(255, 255, 255); padding-top: 5%; padding-right: 5%; padding-bottom: 5%; padding-left: 5%; width: 45%; height: auto;">
+            <ui:Label tabindex="-1" text="Main Menu&#10;" parse-escape-sequences="true" display-tooltip-when-elided="true" name="main-menu" style="align-items: auto; align-self: center; color: rgb(255, 255, 255); font-size: 36px;" />
+            <ui:VisualElement name="button-container" style="flex-grow: 1; justify-content: flex-end; align-items: stretch; width: 300px; height: 100px; flex-direction: column; align-self: center; -unity-background-image-tint-color: rgba(0, 0, 0, 0); background-color: rgba(58, 58, 58, 0); transform-origin: center; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0;">
+                <ui:Button text="Play" parse-escape-sequences="true" display-tooltip-when-elided="true" name="play" />
+                <ui:Button text="Exit" parse-escape-sequences="true" display-tooltip-when-elided="true" name="exit" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

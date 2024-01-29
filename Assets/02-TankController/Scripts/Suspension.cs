@@ -16,6 +16,7 @@ public class Suspension : MonoBehaviour
 
 	public void Init(SuspensionSO inData)
 	{
+		m_RB = GetComponent<Rigidbody>();
 		m_Data = inData;
 	}
 
@@ -41,9 +42,9 @@ public class Suspension : MonoBehaviour
             Vector3 direction = Vector3.down;
 
             Vector3 localDir = transform.TransformDirection(direction);
-            var rb = GetComponent<Rigidbody>();
+            
 
-            Vector3 worldvel = rb.GetPointVelocity(transform.position);
+            Vector3 worldvel = m_RB.GetPointVelocity(transform.position);
 
             Vector3 springVec = transform.position - transform.parent.position;
 
@@ -53,7 +54,7 @@ public class Suspension : MonoBehaviour
 
             float suspensionForce = (suspensionOffset * m_Data.SuspensionStrength) - (suspensionVelocity * m_Data.SuspensionDamper);
 
-            rb.AddForce(localDir * (suspensionForce / rb.mass));
+            m_RB.AddForce(localDir * (suspensionForce / m_RB.mass));
         }
 
 	}
