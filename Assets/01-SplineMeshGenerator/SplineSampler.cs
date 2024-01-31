@@ -34,7 +34,7 @@ public class SplineSampler : MonoBehaviour
         m_splineContainer = gameObject.GetComponent<SplineContainer>();
     }
 
-    // Update is called once per frame
+
     private void Update()
     {
         m_splineContainer.Evaluate(m_splineIndex, m_time, out m_position, out m_forward, out m_upVector);

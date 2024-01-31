@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Splines;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(SplineSampler))]
 [RequireComponent(typeof(MeshFilter))]
@@ -31,12 +32,12 @@ public class SplineRoad : MonoBehaviour
 
     }
 
-
     private void Update()
     {
         GetVerts();
         BuildMesh();
     }
+
 
     private void GetVerts()
     {
@@ -50,7 +51,7 @@ public class SplineRoad : MonoBehaviour
       
             for (int i = 0; i < resolution; i++)
             {
-                float t = step * i;
+            float t = step * i;
                 m_splineSampler.SampleSplineWidth(t, m_width, out p1, out p2);
                 m_vertsP1.Add(p1);
                 m_vertsP2.Add(p2);
@@ -126,5 +127,20 @@ public class SplineRoad : MonoBehaviour
         m_meshFilter.mesh = m;
 
 
+        //private void OnEnable()
+        //{
+        //    Spline.Changed += OnSplineChanged;
+        //    GetVerts();
+        //}
+
+        //private void OnDisable()
+        //{
+        //    Spline.Changed -= OnSplineChanged;
+        //}
+
+        //private void OnSplineChanged(Spline arg1, int arg2, SplineModification arg3)
+        //{
+
+        //}
     }
 }
