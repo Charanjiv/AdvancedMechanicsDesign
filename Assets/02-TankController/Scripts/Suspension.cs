@@ -22,40 +22,63 @@ public class Suspension : MonoBehaviour
 
 	public bool GetGrounded()
 	{
-		if (Physics.Raycast(m_Wheel.position, -m_Wheel.up, m_Data.WheelDiameter))
-		{
-			return true;
 
-		}
-		else
-		{
-			return false;
-		}
-		
+		return m_Grounded;
+		//if (Physics.Raycast(m_Wheel.position, -m_Wheel.up, m_Data.WheelDiameter))
+		//{
+		//	return m_Grounded = true;
+
+		//}
+		//else
+		//{
+		//	return false;
+		//}
+
 	}
 
 	private void FixedUpdate()
 	{
 
-		if(GetGrounded())
-		{
-            Vector3 direction = Vector3.down;
+		RaycastHit hit;
+		bool isGrounded = Physics.Raycast(transform.position, -transform.up, out hit, m_SpringSize, m_Data.SuspensionLayermask);
 
-            Vector3 localDir = transform.TransformDirection(direction);
-            
-
-            Vector3 worldvel = m_RB.GetPointVelocity(transform.position);
-
-            Vector3 springVec = transform.position - transform.parent.position;
-
-            float suspensionOffset = m_Data.WheelDiameter - Vector3.Dot(springVec, localDir);
-
-            float suspensionVelocity = Vector3.Dot(localDir, worldvel);
-
-            float suspensionForce = (suspensionOffset * m_Data.SuspensionStrength) - (suspensionVelocity * m_Data.SuspensionDamper);
-
-            m_RB.AddForce(localDir * (suspensionForce / m_RB.mass));
+        if (isGrounded!=m_Grounded)
+        {
+			m_Grounded = isGrounded;
+			OnGroundedChanged.Invoke(m_Grounded);
         }
 
-	}
+		Vector3 localDir = transform.TransformDirection(Vector3.up);
+
+
+
+
+
+
+
+
+
+
+
+        //if(GetGrounded())
+        //{
+        //          Vector3 direction = Vector3.down;
+
+        //          Vector3 localDir = transform.TransformDirection(direction);
+
+
+        //          Vector3 worldvel = m_RB.GetPointVelocity(transform.position);
+
+        //          Vector3 springVec = transform.position - transform.parent.position;
+
+        //          float suspensionOffset = m_Data.WheelDiameter - Vector3.Dot(springVec, localDir);
+
+        //          float suspensionVelocity = Vector3.Dot(localDir, worldvel);
+
+        //          float suspensionForce = (suspensionOffset * m_Data.SuspensionStrength) - (suspensionVelocity * m_Data.SuspensionDamper);
+
+        //          m_RB.AddForce(localDir * (suspensionForce / m_RB.mass));
+        //      }
+
+    }
 }
