@@ -31,8 +31,28 @@ public class SplineRoad : MonoBehaviour
         m_meshRenderer = gameObject.GetComponent<MeshRenderer>();
 
     }
+    //private void OnEnable()
+    //{
+    //    Spline.Changed += OnSplineChanged;
+    //    GetVerts();
+    //}
+
+    //private void OnDisable()
+    //{
+    //    Spline.Changed -= OnSplineChanged;
+    //}
+
+    //private void OnSplineChanged(Spline arg1, int arg2, SplineModification arg3)
+    //{
+    //    Rebuild();
+    //}
 
     private void Update()
+    {
+        Rebuild();
+    }
+
+    public void Rebuild()
     {
         GetVerts();
         BuildMesh();
@@ -41,26 +61,46 @@ public class SplineRoad : MonoBehaviour
 
     private void GetVerts()
     {
+        //m_vertsP1 = new List<Vector3>();
+        //m_vertsP2 = new List<Vector3>();
+
+        //float step = 1f / (float)resolution;
+        //Vector3 p1;
+        //Vector3 p2;
+
+
+        //    for (int i = 0; i < resolution; i++)
+        //    {
+        //    float t = step * i;
+        //        m_splineSampler.SampleSplineWidth(t, m_width, out p1, out p2);
+        //        m_vertsP1.Add(p1);
+        //        m_vertsP2.Add(p2);
+        //    }
+
+        //    m_splineSampler.SampleSplineWidth(1f, m_width, out p1, out p2);
+        //    m_vertsP1.Add(p1);
+        //    m_vertsP2.Add(p2);
         m_vertsP1 = new List<Vector3>();
         m_vertsP2 = new List<Vector3>();
 
         float step = 1f / (float)resolution;
         Vector3 p1;
         Vector3 p2;
-
-      
+        for (int j = 0; j < m_splineSampler.NumSplines; j++)
+        {
             for (int i = 0; i < resolution; i++)
             {
-            float t = step * i;
-                m_splineSampler.SampleSplineWidth(t, m_width, out p1, out p2);
+                float t = step * i;
+                m_splineSampler.SampleSplineWidth(j, t, m_width, out p1, out p2);
                 m_vertsP1.Add(p1);
                 m_vertsP2.Add(p2);
             }
 
-            m_splineSampler.SampleSplineWidth(1f, m_width, out p1, out p2);
+            m_splineSampler.SampleSplineWidth(j, 1f, m_width, out p1, out p2);
             m_vertsP1.Add(p1);
             m_vertsP2.Add(p2);
-        
+        }
+
 
     }
 
@@ -81,66 +121,94 @@ public class SplineRoad : MonoBehaviour
 
     private void BuildMesh()
     {
+        //Mesh m = new Mesh();
+
+        //List<Vector3> verts = new List<Vector3>();
+        //List<int> tris = new List<int>();
+        //int offset = 0;
+
+        //int length = m_vertsP2.Count;
+
+
+        //for (int i = 1; i <= length; i++)
+        //{
+        //    Vector3 p1 = m_vertsP1[i - 1];
+        //    Vector3 p2 = m_vertsP2[i - 1];
+        //    Vector3 p3;
+        //    Vector3 p4;
+
+        //    if (i == length)
+        //    {
+        //        p3 = m_vertsP1[0];
+        //        p4 = m_vertsP2[0];
+        //    }
+        //    else
+        //    {
+        //        p3 = m_vertsP1[i];
+        //        p4 = m_vertsP2[i];
+        //    }
+
+        //    offset = 4 * (i - 1);
+        //    int t1 = offset + 0;
+        //    int t2 = offset + 2;
+        //    int t3 = offset + 3;
+
+        //    int t4 = offset + 3;
+        //    int t5 = offset + 1;
+        //    int t6 = offset + 0;
+
+        //    verts.AddRange(new List<Vector3> { p1, p2, p3, p4 });
+        //    tris.AddRange(new List<int> { t1, t2, t3, t4, t5, t6 });
+
+        //}
+
+        //m.SetVertices(verts);
+        //m.SetTriangles(tris, 0);
+        //m_meshFilter.mesh = m;
         Mesh m = new Mesh();
 
         List<Vector3> verts = new List<Vector3>();
         List<int> tris = new List<int>();
+        List<Vector2> uvs = new List<Vector2>();
+
         int offset = 0;
 
         int length = m_vertsP2.Count;
 
-
-        for (int i = 1; i <= length; i++)
+        for (int currentSplineIndex = 0; currentSplineIndex < m_splineSampler.NumSplines; currentSplineIndex++)
         {
-            Vector3 p1 = m_vertsP1[i - 1];
-            Vector3 p2 = m_vertsP2[i - 1];
-            Vector3 p3;
-            Vector3 p4;
-
-            if (i == length)
+            int splineOffset = resolution * currentSplineIndex;
+            splineOffset += currentSplineIndex;
+            //Iterate verts and build a face
+            for (int currentSplinePoint = 1; currentSplinePoint < resolution + 1; currentSplinePoint++)
             {
-                p3 = m_vertsP1[0];
-                p4 = m_vertsP2[0];
-            }
-            else
-            {
-                p3 = m_vertsP1[i];
-                p4 = m_vertsP2[i];
-            }
+                int vertoffset = splineOffset + currentSplinePoint;
+                Vector3 p1 = m_vertsP1[vertoffset - 1];
+                Vector3 p2 = m_vertsP2[vertoffset - 1];
+                Vector3 p3 = m_vertsP1[vertoffset];
+                Vector3 p4 = m_vertsP2[vertoffset];
 
-            offset = 4 * (i - 1);
-            int t1 = offset + 0;
-            int t2 = offset + 2;
-            int t3 = offset + 3;
+                offset = 4 * resolution * currentSplineIndex;
+                offset += 4 * (currentSplinePoint - 1);
 
-            int t4 = offset + 3;
-            int t5 = offset + 1;
-            int t6 = offset + 0;
+                int t1 = offset + 0;
+                int t2 = offset + 2;
+                int t3 = offset + 3;
 
-            verts.AddRange(new List<Vector3> { p1, p2, p3, p4 });
-            tris.AddRange(new List<int> { t1, t2, t3, t4, t5, t6 });
+                int t4 = offset + 3;
+                int t5 = offset + 1;
+                int t6 = offset + 0;
+
+                verts.AddRange(new List<Vector3> { p1, p2, p3, p4 });
+                tris.AddRange(new List<int> { t1, t2, t3, t4, t5, t6 });
+
+
+
+            }    
+            m.SetVertices(verts);
+            m.SetTriangles(tris, 0);
+            m_meshFilter.mesh = m;
 
         }
-
-        m.SetVertices(verts);
-        m.SetTriangles(tris, 0);
-        m_meshFilter.mesh = m;
-
-
-        //private void OnEnable()
-        //{
-        //    Spline.Changed += OnSplineChanged;
-        //    GetVerts();
-        //}
-
-        //private void OnDisable()
-        //{
-        //    Spline.Changed -= OnSplineChanged;
-        //}
-
-        //private void OnSplineChanged(Spline arg1, int arg2, SplineModification arg3)
-        //{
-
-        //}
     }
 }

@@ -49,15 +49,11 @@ public class Suspension : MonoBehaviour
         }
 
 		Vector3 localDir = transform.TransformDirection(Vector3.up);
-
-
-
-
-
-
-
-
-
+		Vector3 worldDir = m_RB.GetPointVelocity(transform.TransformPoint(localDir));
+		float susOffset = m_SpringSize - hit.distance;
+		float susVel = Vector3.Dot(localDir, worldDir);
+		float susForce = (susOffset * m_Data.SuspensionStrength) - (susVel * m_Data.SuspensionDamper);
+		m_RB.AddForceAtPosition(localDir * susForce, transform.position, ForceMode.Acceleration);
 
 
         //if(GetGrounded())
