@@ -24,15 +24,6 @@ public class Suspension : MonoBehaviour
 	{
 
 		return m_Grounded;
-		//if (Physics.Raycast(m_Wheel.position, -m_Wheel.up, m_Data.WheelDiameter))
-		//{
-		//	return m_Grounded = true;
-
-		//}
-		//else
-		//{
-		//	return false;
-		//}
 
 	}
 
@@ -48,12 +39,12 @@ public class Suspension : MonoBehaviour
 			OnGroundedChanged.Invoke(m_Grounded);
         }
 
-		Vector3 localDir = transform.TransformDirection(Vector3.up);
-		Vector3 worldDir = m_RB.GetPointVelocity(transform.TransformPoint(localDir));
-		float susOffset = m_SpringSize - hit.distance;
-		float susVel = Vector3.Dot(localDir, worldDir);
-		float susForce = (susOffset * m_Data.SuspensionStrength) - (susVel * m_Data.SuspensionDamper);
-		m_RB.AddForceAtPosition(localDir * susForce, transform.position, ForceMode.Acceleration);
+		Vector3 localDirection = transform.TransformDirection(Vector3.up);
+		Vector3 worldDirection = m_RB.GetPointVelocity(transform.TransformPoint(localDirection));
+		float suspensionOffset = m_SpringSize - hit.distance;
+		float suspensionVel = Vector3.Dot(localDirection, worldDirection);
+		float suspensionForce = (suspensionOffset * m_Data.SuspensionStrength) - (suspensionVel * m_Data.SuspensionDamper);
+		m_RB.AddForceAtPosition(localDirection * suspensionForce, transform.position, ForceMode.Acceleration);
 
 
         //if(GetGrounded())
