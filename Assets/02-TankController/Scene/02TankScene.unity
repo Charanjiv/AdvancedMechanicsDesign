@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 262.38358, g: 325.10843, b: 430.30963, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2163,6 +2163,10 @@ MonoBehaviour:
   m_DriveWheels:
   - {fileID: 1566191699}
   - {fileID: 1692009106}
+  shellPrefab: {fileID: 8873905830520758592, guid: 56bfc4f527671794a87b9276e69e5a3d,
+    type: 3}
+  bulletSpawn: {fileID: 1602318925}
+  shellPrefabTime: 10
 --- !u!4 &928874463
 Transform:
   m_ObjectHideFlags: 0
@@ -3333,6 +3337,7 @@ MonoBehaviour:
   - {fileID: 1851593820}
   - {fileID: 693492378}
   m_Acceleration: 0
+  m_canMove: 1
 --- !u!1 &1572685873
 GameObject:
   m_ObjectHideFlags: 0
@@ -3543,6 +3548,7 @@ MonoBehaviour:
   - {fileID: 1689150374}
   - {fileID: 1087929410}
   m_Acceleration: 0
+  m_canMove: 1
 --- !u!1 &1749546095
 GameObject:
   m_ObjectHideFlags: 0

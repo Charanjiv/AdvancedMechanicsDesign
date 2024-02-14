@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Animations;
 using UnityEngine.InputSystem;
@@ -73,7 +74,9 @@ public class TankController : MonoBehaviour
 		m_InAccelerate = context.ReadValue<float>();
 		foreach (DriveWheel wheel in m_DriveWheels)
 		{
-			wheel.SetAcceleration(m_InAccelerate);
+            wheel.m_canMove = true;
+
+            wheel.SetAcceleration(m_InAccelerate);
 		}
 		m_TurretController.SetRotationDirty();
 	}
@@ -82,7 +85,7 @@ public class TankController : MonoBehaviour
 		m_InAccelerate = context.ReadValue<float>();
 		foreach (DriveWheel wheel in m_DriveWheels)
 		{
-            
+            wheel.m_canMove = false;
 
             wheel.SetAcceleration(m_InAccelerate);
 		}
@@ -134,12 +137,26 @@ public class TankController : MonoBehaviour
 
 		StopCoroutine(m_CRFire);
 	}
+
+	[SerializeField] private GameObject shellPrefab;
+    [SerializeField] private Transform bulletSpawn;
+    [SerializeField] private float shellPrefabTime = 10f;
 	private IEnumerator C_FireUpdate()
 	{
 		while (m_IsFiring)
 		{
+			Debug.Log("Fire");
+			GameObject shell = Instantiate(shellPrefab, bulletSpawn.position, Quaternion.identity);
+			shell.GetComponent<Rigidbody>().AddForce(bulletSpawn.forward.normalized * m_Data.ShellData.Velocity, ForceMode.Impulse);
+			StartCoroutine(DestroyShellAfterTime(shell, shellPrefabTime));
 			yield return null;
-		}
+        }
+		m_IsFiring = false;
+    }
+	private IEnumerator DestroyShellAfterTime(GameObject shell,float delay)
+	{
+		yield return new WaitForSeconds(delay);
+		Destroy(shell);
 	}
 
 	private void Handle_AimPerformed(InputAction.CallbackContext context)

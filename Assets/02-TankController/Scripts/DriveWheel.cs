@@ -16,18 +16,19 @@ public class DriveWheel : MonoBehaviour
 	public float m_Acceleration;
 
     private float m_fRequestedDir;
-    private bool m_canMove = true;
+    public bool m_canMove = true;
     public void SetAcceleration(float amount)
 	{
-		//m_Acceleration = amount;
-		//StartCoroutine(StartMotor());
-		if(m_fRequestedDir != amount)
+		if (m_canMove)
 		{
-			m_fRequestedDir = amount;
-			m_canMove=true;
-		}
-		StartMoving();
+			m_Acceleration = amount;
+			StartCoroutine(StartMotor());
 
+		}
+		else if (m_canMove = false)
+		{
+			StopCoroutine(StartMotor());
+		}
 
 	}
 
@@ -46,10 +47,13 @@ public class DriveWheel : MonoBehaviour
 	IEnumerator StartMotor() 
 	{
 		Debug.Log("Movement");
-			Vector3 moveDirection = transform.forward * m_Acceleration;
+		while(m_canMove ==true)
+		{
+			Vector3 moveDirection =transform.position * m_Data.EngineData.HorsePower;
 			//m_RB.MovePosition(m_RB.position + moveDirection);
 			m_RB.AddForce(moveDirection, ForceMode.Impulse);
 			yield return null;
+		}
 		
 	}
 
