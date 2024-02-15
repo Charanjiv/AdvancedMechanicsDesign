@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 565894c2efdd59d40ab93ebc095fa1d8, type: 3}
   m_Name: Tiger131_Suspension
   m_EditorClassIdentifier: 
-  WheelDiameter: 0
-  SuspensionDamper: 0
-  SuspensionStrength: 0
+  WheelDiameter: 8
+  SuspensionDamper: 10
+  SuspensionStrength: 10
   SuspensionLayermask:
     serializedVersion: 2
     m_Bits: 1
-  MaximumSlope: 0
-  HullTraverseDegrees: 0
+  MaximumSlope: 10
+  HullTraverseDegrees: 10

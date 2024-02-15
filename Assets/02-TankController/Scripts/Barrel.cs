@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,6 +12,7 @@ public class Barrel : MonoBehaviour
 	private int m_SelectedShell;
 
 	private float m_CurrentDispersion;
+	Coroutine m_CRReloading;
 
 	public void Init(TankSO inData)
 	{
@@ -19,7 +21,20 @@ public class Barrel : MonoBehaviour
 
 	public void Fire()
 	{
+		//Shell shell = Instantiate(m_ShellPrefab, transform.position, transform.rotation);
+		//shell.transform.parent = null;
+		//shell.Fire();
+		//m_CRReloading = StartCoroutine(C_Reloding());
+    }
 
-	}
-
+    private IEnumerator C_Reloding()
+    {
+		yield return null;
+    }
 }
+
+
+
+
+
+

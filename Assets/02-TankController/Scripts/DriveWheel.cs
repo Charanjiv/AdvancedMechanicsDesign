@@ -25,7 +25,7 @@ public class DriveWheel : MonoBehaviour
 			StartCoroutine(StartMotor());
 
 		}
-		else if (m_canMove = false)
+		else if (m_canMove == false)
 		{
 			StopCoroutine(StartMotor());
 		}
@@ -51,7 +51,8 @@ public class DriveWheel : MonoBehaviour
 		{
 			Vector3 moveDirection =transform.position * m_Data.EngineData.HorsePower;
 			//m_RB.MovePosition(m_RB.position + moveDirection);
-			m_RB.AddForce(moveDirection, ForceMode.Impulse);
+			//m_RB.AddForce(moveDirection, ForceMode.Impulse);
+			StartMotor();
 			yield return null;
 		}
 		

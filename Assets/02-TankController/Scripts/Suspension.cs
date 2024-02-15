@@ -14,9 +14,12 @@ public class Suspension : MonoBehaviour
 	private float m_SpringSize;
 	private bool m_Grounded;
 
-	public void Init(SuspensionSO inData)
+	private bool isGrounded;
+
+
+    public void Init(SuspensionSO inData)
 	{
-		m_RB = GetComponent<Rigidbody>();
+		
 		m_Data = inData;
 	}
 
@@ -30,25 +33,37 @@ public class Suspension : MonoBehaviour
 	private void FixedUpdate()
 	{
 
-		//RaycastHit hit;
-		//bool isGrounded = Physics.Raycast(transform.position, -transform.up, out hit, m_SpringSize, m_Data.SuspensionLayermask);
+		RaycastHit hit;
+		isGrounded = Physics.Raycast(transform.position, -transform.up, out hit, m_SpringSize, m_Data.SuspensionLayermask);
 
-		//if (isGrounded != m_Grounded)
-		//{
-		//	m_Grounded = isGrounded;
-		//	OnGroundedChanged.Invoke(m_Grounded);
-		//}
+		if (isGrounded != m_Grounded)
+		{
+			m_Grounded = isGrounded;
+			OnGroundedChanged.Invoke(m_Grounded);
+		}
 
-		//if (m_Grounded)
-		//{
-		//	Vector3 localDirection = transform.TransformDirection(Vector3.up);
-		//	Vector3 worldDirection = m_RB.GetPointVelocity(transform.TransformPoint(localDirection));
-		//	float suspensionOffset = m_SpringSize - hit.distance;
-		//	float suspensionVel = Vector3.Dot(localDirection, worldDirection);
-		//	float suspensionForce = (suspensionOffset * m_Data.SuspensionStrength) - (suspensionVel * m_Data.SuspensionDamper);
-		//	m_RB.AddForceAtPosition(localDirection * suspensionForce, transform.position, ForceMode.Acceleration);
+		if (m_Grounded)
+		{
+			//Vector3 localDirection = transform.TransformDirection(Vector3.up);
+			//Vector3 worldDirection = m_RB.GetPointVelocity(transform.TransformPoint(localDirection));
+			float suspensionOffset = m_SpringSize - hit.distance;
+			float suspensionVel = Mathf.Abs(Vector3.Dot(m_RB.GetPointVelocity(transform.position), transform.up));
+			float suspensionForce = Mathf.Abs((suspensionOffset * m_Data.SuspensionStrength) - (suspensionVel * m_Data.SuspensionDamper));
 
-		//}
+
+			float slipSpeed =Vector3.Dot(m_RB.GetPointVelocity(transform.position), transform.right);
+			//float steerForce = -slipSpeed;
+			
+			//if(slipSpeed > threshold)
+			{
+				//steerForce = threshold * 0.81f;
+			}
+
+
+
+            m_RB.AddForceAtPosition((transform.up * suspensionForce) + (transform.right * - slipSpeed), transform.position, ForceMode.Acceleration);
+
+		}
 		///////////////////////////////////////
 
 		//if(GetGrounded())
