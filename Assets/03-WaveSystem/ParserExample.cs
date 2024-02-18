@@ -76,15 +76,15 @@ public class ParserExample : MonoBehaviour
         {
             if(state == ParserState.OutsideBlock)
             {
-                //ParseOutsideBlock();
+                ParseOutsideBlock();
             }
             else if (state == ParserState.InsideBlockBody)
             {
-                //ParseInsideBlock();
+                ParseInsideBlock();
             }
             else if(state == ParserState.InsideBlockHeader)
             {
-                //ParseInsideBlockHeader();
+                ParseInsideBlockHeader();
             }
         }
 
@@ -98,7 +98,53 @@ public class ParserExample : MonoBehaviour
 
         if (ReachedEnd())
             return;
+
+        currentBlock.type = GetLastMatchedBlockType();
+
+        ChangeState(ParserState.InsideBlockHeader);
     }
+
+    private void ParseInsideBlock()
+    {
+        while (!BufferHasAny("health", "speed", "damage") && !ReachedEnd())
+            NextChar();
+
+
+        if (ReachedEnd())
+            return;
+
+        currentBlock.type = GetLastMatchedBlockType();
+
+        ChangeState(ParserState.OutsideBlock);
+
+    }
+
+    private void ParseInsideBlockHeader()
+    {
+        while(!BufferHasAny("_Tom", "_Ben") && !ReachedEnd())
+            NextChar();
+
+
+        if (ReachedEnd())
+            return;
+
+        currentBlock.type = GetLastMatchedBlockType();
+
+        ChangeState(ParserState.InsideBlockBody);
+
+    }
+
+    private string GetLastMatchedBlockType()
+    {
+        string lasttMatched = null;
+
+        lasttMatched ??= (BufferHas("cluster") ? "cluster" : null);
+        lasttMatched ??= (BufferHas("wave") ? "wave" : null);
+        lasttMatched ??= (BufferHas("type") ? "type" : null);
+
+        return lasttMatched;
+    }
+
 
 
 

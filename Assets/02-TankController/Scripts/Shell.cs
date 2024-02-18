@@ -8,11 +8,11 @@ public class Shell : MonoBehaviour
     private Rigidbody m_RB;
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.CompareTag("Target"))
-        {
-            Debug.Log("hit " + collision.gameObject.name);
-            Destroy(gameObject); 
-        }
+        //if (collision.gameObject.CompareTag("Target"))
+        //{
+        //    Debug.Log("hit " + collision.gameObject.name);
+        //    Destroy(gameObject);
+        //}
     }
 //    public void Fire()
 //    {

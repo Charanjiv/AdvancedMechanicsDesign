@@ -15,12 +15,14 @@ public class Suspension : MonoBehaviour
 	private bool m_Grounded;
 
 	private bool isGrounded;
+	RaycastHit hit;
 
 
     public void Init(SuspensionSO inData)
 	{
 		
 		m_Data = inData;
+		isGrounded = Physics.Raycast(transform.position, -transform.up, out hit, m_SpringSize, m_Data.SuspensionLayermask);
 	}
 
 	public bool GetGrounded()
@@ -32,9 +34,7 @@ public class Suspension : MonoBehaviour
 
 	private void FixedUpdate()
 	{
-
-		RaycastHit hit;
-		isGrounded = Physics.Raycast(transform.position, -transform.up, out hit, m_SpringSize, m_Data.SuspensionLayermask);
+		GetGrounded();
 
 		if (isGrounded != m_Grounded)
 		{
@@ -52,11 +52,11 @@ public class Suspension : MonoBehaviour
 
 
 			float slipSpeed =Vector3.Dot(m_RB.GetPointVelocity(transform.position), transform.right);
-			//float steerForce = -slipSpeed;
-			
-			//if(slipSpeed > threshold)
+			float steerForce = -slipSpeed;
+			float threshold = m_RB.mass * MathF.Sin(35);
+			if(slipSpeed > threshold)
 			{
-				//steerForce = threshold * 0.81f;
+				steerForce = threshold * 0.81f;
 			}
 
 
@@ -64,27 +64,5 @@ public class Suspension : MonoBehaviour
             m_RB.AddForceAtPosition((transform.up * suspensionForce) + (transform.right * - slipSpeed), transform.position, ForceMode.Acceleration);
 
 		}
-		///////////////////////////////////////
-
-		//if(GetGrounded())
-		//{
-		//          Vector3 direction = Vector3.down;
-
-		//          Vector3 localDir = transform.TransformDirection(direction);
-
-
-		//          Vector3 worldvel = m_RB.GetPointVelocity(transform.position);
-
-		//          Vector3 springVec = transform.position - transform.parent.position;
-
-		//          float suspensionOffset = m_Data.WheelDiameter - Vector3.Dot(springVec, localDir);
-
-		//          float suspensionVelocity = Vector3.Dot(localDir, worldvel);
-
-		//          float suspensionForce = (suspensionOffset * m_Data.SuspensionStrength) - (suspensionVelocity * m_Data.SuspensionDamper);
-
-		//          m_RB.AddForce(localDir * (suspensionForce / m_RB.mass));
-		//      }
-
 	}
 }

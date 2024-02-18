@@ -18,8 +18,10 @@ public class TankController : MonoBehaviour
 	private int m_NumSuspensionsGrounded;
 
 	private float m_InAccelerate;
-
-	private float m_InSteer;
+	//
+    private Coroutine m_CRMove;
+	//
+    private float m_InSteer;
 	private bool m_IsSteering;
 	private Coroutine m_CRSteer;
 
@@ -69,13 +71,14 @@ public class TankController : MonoBehaviour
 		m_ActionMap.Default.Zoom.performed -= Handle_ZoomPerformed;
 	}
 
+
 	private void Handle_AcceleratePerformed(InputAction.CallbackContext context)
 	{
 		m_InAccelerate = context.ReadValue<float>();
 		foreach (DriveWheel wheel in m_DriveWheels)
 		{
             wheel.m_canMove = true;
-
+            
             wheel.SetAcceleration(m_InAccelerate);
 		}
 		m_TurretController.SetRotationDirty();
@@ -86,13 +89,29 @@ public class TankController : MonoBehaviour
 		foreach (DriveWheel wheel in m_DriveWheels)
 		{
             wheel.m_canMove = false;
-
+            
             wheel.SetAcceleration(m_InAccelerate);
 		}
 		m_TurretController.SetRotationDirty();
 	}
 
-	private void Handle_SteerPerformed(InputAction.CallbackContext context)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    private void Handle_SteerPerformed(InputAction.CallbackContext context)
 	{
 		m_InSteer = context.ReadValue<float>();
 
@@ -116,10 +135,12 @@ public class TankController : MonoBehaviour
 	{
 		while (m_IsSteering)
 		{
-
+			
 			yield return null;
 		}
 	}
+
+
 
 	private void Handle_FirePerformed(InputAction.CallbackContext context)
 	{
@@ -158,6 +179,13 @@ public class TankController : MonoBehaviour
 		yield return new WaitForSeconds(delay);
 		Destroy(shell);
 	}
+
+
+
+
+
+
+
 
 	private void Handle_AimPerformed(InputAction.CallbackContext context)
 	{
