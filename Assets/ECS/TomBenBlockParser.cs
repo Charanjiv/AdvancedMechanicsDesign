@@ -1,10 +1,10 @@
-using Codice.CM.Common;
+
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
 using UnityEngine;
-using static PlasticPipe.PlasticProtocol.Messages.Serialization.ItemHandlerMessagesSerialization;
+
 
 public class TomBenBlockParser : MonoBehaviour
 {
@@ -77,8 +77,8 @@ public class TomBenBlockParser : MonoBehaviour
                 ParseInsideBlockHeader();
             }
         }
-        
 
+        
         return blocks;
     }
 
@@ -90,11 +90,7 @@ public class TomBenBlockParser : MonoBehaviour
         if (ReachedEnd())
             return;
         currentBlock.type = GetLastMatchedBlockType();
-        blocks.Add(currentBlock);
-
-        //Regex Type = new Regex(@"(cluster|type|wave)", RegexOptions.IgnoreCase);
-        //Match TypeMatch = Type.Match(fileContent);
-        //currentBlock.type = TypeMatch.Value;
+       // blocks.Add(currentBlock);
 
         ChangeState(ParserState.InsideBlockHeader);
     }
@@ -114,10 +110,13 @@ public class TomBenBlockParser : MonoBehaviour
         //string regexPattern = "(health | speed | damage)=>(\d*)";
         //Regex regex = new Regex(regexPattern);
         //Match regexMatch = regex.Match(inputFile)
-        Regex Content = new Regex(@"_Tom([\w\s\W]*)_Ben", RegexOptions.IgnoreCase);
+        //Regex Content = new Regex(@"_Tom([\w\s\W]*)_Ben", RegexOptions.IgnoreCase);
+        Regex Content = new Regex(@"(?:\s*(.*)\s*)");
         Match ContentMatch = Content.Match(charBuffer);
-        currentBlock.content = ContentMatch.Value;
+        currentBlock.content = ContentMatch.Groups[1].Value;
+
         
+
         ChangeState(ParserState.OutsideBlock);
 
     }
@@ -132,18 +131,18 @@ public class TomBenBlockParser : MonoBehaviour
             return;
 
 
-        Regex ID = new Regex(@"(\d)");
-        Match MatchID = ID.Match(charBuffer);
-        
-
+        Regex ID = new Regex(@"(\d+)");
         Regex Name = new Regex(@"(?:\((.*)\))");
-        Match NameMatch = Name.Match(charBuffer);
 
+        Match MatchID = ID.Match(charBuffer);
+        Match NameMatch = Name.Match(charBuffer);
+        
         int.TryParse(MatchID.Groups[1].Value, out int result);
 
         currentBlock.name = NameMatch.Groups[1].Value;
         currentBlock.id = result;
         
+        ChangeState(ParserState.InsideBlockBody);
 
         
 
@@ -152,19 +151,18 @@ public class TomBenBlockParser : MonoBehaviour
 
         //currentBlock.type = GetLastMatchedBlockType();
         
-        ChangeState(ParserState.InsideBlockBody);
 
     }
 
     private string GetLastMatchedBlockType()
     {
-        string lasttMatched = null;
+        string lastMatched = null;
 
-        lasttMatched ??= (BufferHas("cluster") ? "cluster" : null);
-        lasttMatched ??= (BufferHas("wave") ? "wave" : null);
-        lasttMatched ??= (BufferHas("type") ? "type" : null);
-
-        return lasttMatched;
+        lastMatched ??= (BufferHas("cluster") ? "cluster" : null);
+        lastMatched ??= (BufferHas("wave") ? "wave" : null);
+        lastMatched ??= (BufferHas("type") ? "type" : null);
+        
+        return lastMatched;
     }
 
 

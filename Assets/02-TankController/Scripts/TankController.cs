@@ -1,3 +1,4 @@
+using Codice.CM.Common;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
@@ -6,6 +7,7 @@ using UnityEngine;
 using UnityEngine.Animations;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering;
+using static UnityEngine.GraphicsBuffer;
 
 public class TankController : MonoBehaviour
 {
@@ -15,6 +17,7 @@ public class TankController : MonoBehaviour
 	[SerializeField] private CameraController m_CameraController;
 	[SerializeField] private Turret m_TurretController;
 	[SerializeField] private DriveWheel[] m_DriveWheels;
+	private Barrel m_Barrel;
 	private int m_NumSuspensionsGrounded;
 
 	private float m_InAccelerate;
@@ -34,7 +37,7 @@ public class TankController : MonoBehaviour
 		m_RB = GetComponent<Rigidbody>();
 		m_CameraController = GetComponent<CameraController>();
 		m_TurretController = GetComponent<Turret>();
-		
+		m_Barrel = GetComponent<Barrel>();
 		m_NumSuspensionsGrounded = 0;
 		foreach (DriveWheel wheel in m_DriveWheels)
 		{
@@ -135,7 +138,15 @@ public class TankController : MonoBehaviour
 	{
 		while (m_IsSteering)
 		{
-			
+			float speed = 100;
+
+
+			Vector3 projectedVec = Vector3.ProjectOnPlane(transform.forward, transform.position);
+			Quaternion targetRot = Quaternion.LookRotation(projectedVec, transform.position);//projectedVec
+			Debug.DrawLine(transform.position, transform.position + projectedVec * 25, Color.red);
+			m_RB.transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, speed * Time.deltaTime);
+
+
 			yield return null;
 		}
 	}
@@ -169,10 +180,13 @@ public class TankController : MonoBehaviour
 			Debug.Log("Fire");
 			GameObject shell = Instantiate(shellPrefab, bulletSpawn.position, Quaternion.identity);
 			shell.GetComponent<Rigidbody>().AddForce(bulletSpawn.forward.normalized * m_Data.ShellData.Velocity, ForceMode.Impulse);
+			//StartCoroutine(m_Barrel.C_Reloding());
 			StartCoroutine(DestroyShellAfterTime(shell, shellPrefabTime));
-			yield return null;
-        }
+			//m_Barrel.Fire();
+
+		}
 		m_IsFiring = false;
+			yield return null;
     }
 	private IEnumerator DestroyShellAfterTime(GameObject shell, float delay)
 	{
@@ -201,6 +215,7 @@ public class TankController : MonoBehaviour
 
 	private void Handle_SuspensionGroundedChanged(bool newGrounded)
 	{
+        
 
-	}
+    }
 }

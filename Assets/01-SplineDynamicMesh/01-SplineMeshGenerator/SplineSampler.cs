@@ -75,3 +75,27 @@ public class SplineSampler : MonoBehaviour
 
     }
 }
+//#if UNITY_EDITOR
+
+//[CustomEditor(typeof(SplineSampler))]
+//public class SplineSamplerEditor : Editor
+//{
+//    protected virtual void OnSceneGUI()
+//    {
+//        SplineSampler procTarget = (SplineSampler)target;
+
+//        EditorGUI.BeginChangeCheck();
+
+//        Vector3 newOffset = Handles.DoPositionHandle(procTarget.transform.position,
+//                                                     procTarget.transform.rotation);
+
+//        if (EditorGUI.EndChangeCheck())
+//        {
+//            Undo.RecordObject(procTarget, "Procedural Values Changed!");
+//            procTarget.transform.position = newOffset - procTarget.transform.position;
+
+//        }
+//    }
+//}
+
+//#endif

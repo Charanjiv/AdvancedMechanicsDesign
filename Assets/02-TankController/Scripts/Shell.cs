@@ -6,16 +6,20 @@ public class Shell : MonoBehaviour
 {
     private ShellSO m_Data;
     private Rigidbody m_RB;
-    private void OnCollisionEnter(Collision collision)
+
+    public void Init(ShellSO data)
     {
-        //if (collision.gameObject.CompareTag("Target"))
-        //{
-        //    Debug.Log("hit " + collision.gameObject.name);
-        //    Destroy(gameObject);
-        //}
+        m_Data = data;
+        m_RB = GetComponent<Rigidbody>();
     }
-//    public void Fire()
-//    {
-//        m_RB.AddForce(transform.forward * m_Data.Velocity, ForceMode.Impulse);
-//    }
+
+    public void Fire()
+    {
+        m_RB.AddForce(transform.forward * m_Data.Velocity, ForceMode.Impulse);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        
+    }
 }

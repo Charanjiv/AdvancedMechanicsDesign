@@ -37,24 +37,25 @@ public class Turret : MonoBehaviour
         Vector3 projectedVec = Vector3.ProjectOnPlane(cameraForward, m_Turret.up);
         Quaternion targetRot = Quaternion.LookRotation(projectedVec, m_Turret.up);
         Debug.DrawLine(m_Turret.position, m_Turret.position + projectedVec * 25, Color.red);
-        m_Turret.rotation = Quaternion.RotateTowards(m_Turret.rotation, targetRot, speed * Time.deltaTime);
+        m_Turret.rotation = Quaternion.RotateTowards(m_Turret.rotation, targetRot, m_Data.TurretData.TurretTraverseSpeed * Time.deltaTime);
     }
 
     private IEnumerator C_AimTurret()
 	{
-		//Vector3 projectedVec = Vector3.ProjectOnPlane(m_CameraMount.forward, transform.parent.up);
+        //Vector3 projectedVec = Vector3.ProjectOnPlane(m_CameraMount.forward, transform.parent.up);
 
-		//Quaternion targetRot = Quaternion.LookRotation(projectedVec, transform.parent.up);
+        //Quaternion targetRot = Quaternion.LookRotation(projectedVec, transform.parent.up);
 
-		//Debug.DrawLine(transform.position, transform.position + projectedVec * 25f, Color.blue);
+        //Debug.DrawLine(transform.position, transform.position + projectedVec * 25f, Color.blue);
 
-		//transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, m_Data.TurretData.TurretTraverseSpeed * Time.deltaTime);
+        //transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, m_Data.TurretData.TurretTraverseSpeed * Time.deltaTime);
 
-		Vector3 cameraForward = m_CameraMount.transform.position;
-		Vector3 projectedVec = Vector3.ProjectOnPlane(cameraForward, m_Turret.up);
-		Quaternion targetRot = Quaternion.LookRotation(projectedVec,m_Turret.up);
-		Debug.DrawLine(m_Turret.position, m_Turret.position + projectedVec * 25, Color.red);
-		m_Turret.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, speed * Time.deltaTime);
-		yield return null;
+        //Vector3 cameraForward = m_CameraMount.transform.position;
+        //Vector3 projectedVec = Vector3.ProjectOnPlane(cameraForward, m_Turret.up);
+        //Quaternion targetRot = Quaternion.LookRotation(projectedVec,m_Turret.up);
+        //Debug.DrawLine(m_Turret.position, m_Turret.position + projectedVec * 25, Color.red);
+        //m_Turret.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, speed * Time.deltaTime);
+
+        yield return null;
     }
 }

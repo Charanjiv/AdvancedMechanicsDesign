@@ -20,7 +20,7 @@ public class Suspension : MonoBehaviour
 
     public void Init(SuspensionSO inData)
 	{
-		
+
 		m_Data = inData;
 		isGrounded = Physics.Raycast(transform.position, -transform.up, out hit, m_SpringSize, m_Data.SuspensionLayermask);
 	}
@@ -29,6 +29,7 @@ public class Suspension : MonoBehaviour
 	{
 
 		return m_Grounded;
+
 
 	}
 
@@ -44,6 +45,7 @@ public class Suspension : MonoBehaviour
 
 		if (m_Grounded)
 		{
+			
 			//Vector3 localDirection = transform.TransformDirection(Vector3.up);
 			//Vector3 worldDirection = m_RB.GetPointVelocity(transform.TransformPoint(localDirection));
 			float suspensionOffset = m_SpringSize - hit.distance;

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 262.38358, g: 325.10843, b: 430.30963, a: 1}
+  m_IndirectSpecularColor: {r: 261.80057, g: 324.3278, b: 429.24698, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1290,7 +1290,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Wheel: {fileID: 1017359242}
-  m_RB: {fileID: 0}
+  m_RB: {fileID: 928874466}
 --- !u!1 &795188233
 GameObject:
   m_ObjectHideFlags: 0
@@ -2176,7 +2176,7 @@ Transform:
   m_GameObject: {fileID: 928874459}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.24, z: 4.55}
+  m_LocalPosition: {x: 0, y: 1.36, z: 4.55}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2211,7 +2211,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 928874459}
   serializedVersion: 4
-  m_Mass: 1
+  m_Mass: 60
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0.7, z: 0}
@@ -2755,7 +2755,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Wheel: {fileID: 388173715}
-  m_RB: {fileID: 0}
+  m_RB: {fileID: 928874466}
 --- !u!1 &1152831822
 GameObject:
   m_ObjectHideFlags: 0
@@ -3012,7 +3012,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Wheel: {fileID: 1325602300}
-  m_RB: {fileID: 0}
+  m_RB: {fileID: 928874466}
 --- !u!1 &1235931972
 GameObject:
   m_ObjectHideFlags: 0
@@ -3337,7 +3337,6 @@ MonoBehaviour:
   - {fileID: 1208321947}
   - {fileID: 1851593820}
   - {fileID: 693492378}
-  m_Acceleration: 0
   m_canMove: 1
 --- !u!1 &1572685873
 GameObject:
@@ -3496,7 +3495,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Wheel: {fileID: 604312206}
-  m_RB: {fileID: 0}
+  m_RB: {fileID: 928874466}
 --- !u!1 &1692009104
 GameObject:
   m_ObjectHideFlags: 0
@@ -3548,7 +3547,6 @@ MonoBehaviour:
   - {fileID: 1749546097}
   - {fileID: 1689150374}
   - {fileID: 1087929410}
-  m_Acceleration: 0
   m_canMove: 1
 --- !u!1 &1749546095
 GameObject:
@@ -3596,7 +3594,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Wheel: {fileID: 1803464509}
-  m_RB: {fileID: 0}
+  m_RB: {fileID: 928874466}
 --- !u!1 &1803464508
 GameObject:
   m_ObjectHideFlags: 0
@@ -3726,7 +3724,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Wheel: {fileID: 1282588305}
-  m_RB: {fileID: 0}
+  m_RB: {fileID: 928874466}
 --- !u!1 &1896376904
 GameObject:
   m_ObjectHideFlags: 0
